@@ -27,6 +27,22 @@ class FormHandler {
                 this.hamburgerMenu.classList.toggle("active");
                 this.hamburgerMenu.querySelector('.fa-times').classList.toggle('hidden');
             });
+
+            this.menu.addEventListener("click", (event) => {
+                if (event.target === this.menu || event.target.classList.contains('fa-times')) {
+                    this.menu.classList.add("hidden");
+                    this.hamburgerMenu.classList.remove("active");
+                    this.hamburgerMenu.querySelector('.fa-times').classList.add('hidden');
+                }
+            });
+
+            document.querySelectorAll('.menu ul li a').forEach(link => {
+                link.addEventListener('click', () => {
+                    this.menu.classList.add("hidden");
+                    this.hamburgerMenu.classList.remove("active");
+                    this.hamburgerMenu.querySelector('.fa-times').classList.add('hidden');
+                });
+            });
         });
     }
 
@@ -113,7 +129,7 @@ class FormHandler {
         });
 
         const currentYear = new Date().getFullYear();
-        for (let year = currentYear - 100; year <= currentYear + 100; year++) {
+        for (let year = currentYear; year >= currentYear - 100; year--) {
             const option = document.createElement("option");
             option.value = year;
             option.textContent = year;

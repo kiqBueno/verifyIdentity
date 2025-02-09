@@ -216,7 +216,6 @@ button:hover {
   font-size: 1.2rem;
   color: #333;
   opacity: 0.8;
-  margin-top: auto;
 }
 
 .footer i {
@@ -388,5 +387,10 @@ button:hover {
 
   .cards {
     gap: 0.5rem;
+  }
+
+  .calendarGrid {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    font-size: 0.8rem;
   }
 }
