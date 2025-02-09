@@ -73,8 +73,8 @@ body {
   text-align: center;
   cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  border: 0.2rem solid #000000;
-  animation: bubblesAnimation 2s infinite;
+  border: 0.2rem solid transparent; /* Initial transparent border */
+  animation: borderFadeIn 5s linear infinite; /* Apply the new animation */
 }
 
 .card:hover {
@@ -363,13 +363,15 @@ button:hover {
   text-decoration: none;
 }
 
-@keyframes bubblesAnimation {
-  0%,
-  100% {
-    transform: scale(0.95);
+@keyframes borderFadeIn {
+  0% {
+    border-color: transparent;
   }
   50% {
-    transform: scale(0.9);
+    border-color: #000000; /* Solid black border */
+  }
+  100% {
+    border-color: transparent;
   }
 }
 
