@@ -16,6 +16,18 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+    <div class="hamburger-menu" id="hamburgerMenu">
+      <i class="fas fa-bars"></i>
+      <i class="fas fa-times hidden"></i>
+    </div>
+    <nav class="menu hidden" id="menu">
+      <ul>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#join">Join</a></li>
+        <li><a href="#login">Login</a></li>
+        <li><a href="#contact">Help &amp; Contact</a></li>
+      </ul>
+    </nav>
     <div id="landingPage">
       <div class="header">
         <h1>Verify Customer</h1>
@@ -26,15 +38,15 @@
       </div>
       <p class="instruction">Please select a category below to get started:</p>
       <div class="cards">
-        <div class="card" onclick="showForm('residential')">
+        <div class="card" onclick="formHandler.showForm('residential')">
           <div class="imagePlaceholder"><i class="fas fa-home"></i></div>
           <h3>Residential</h3>
         </div>
-        <div class="card" onclick="showForm('auto')">
+        <div class="card" onclick="formHandler.showForm('auto')">
           <div class="imagePlaceholder"><i class="fas fa-car"></i></div>
           <h3>Auto</h3>
         </div>
-        <div class="card" onclick="showForm('commercial')">
+        <div class="card" onclick="formHandler.showForm('commercial')">
           <div class="imagePlaceholder"><i class="fas fa-building"></i></div>
           <h3>Commercial</h3>
         </div>
@@ -49,17 +61,20 @@
     >
       <div>
         <div class="buttonContainer">
-          <button type="button" class="backButton" onclick="goBack()">
+          <button
+            type="button"
+            class="backButton"
+            onclick="formHandler.goBack()"
+          >
             Back
           </button>
-          <button type="submit">Submit</button>
         </div>
         <h2 id="formTitle"></h2>
-        <div class="formGroup">
+        <div class="formGroup hidden">
           <label for="fullName">Full Name</label>
           <input type="text" id="fullName" name="fullName" required />
         </div>
-        <div class="formGroup">
+        <div class="formGroup hidden">
           <label for="serviceAddress">Service Address</label>
           <input
             type="text"
@@ -68,19 +83,24 @@
             required
           />
         </div>
-        <div class="formGroup">
+        <div class="formGroup hidden">
           <label for="homeAddress">Home Address</label>
           <input type="text" id="homeAddress" name="homeAddress" required />
         </div>
-        <div class="formGroup">
+        <div class="formGroup hidden">
           <label for="phoneNumber">Phone Number</label>
-          <input type="text" id="phoneNumber" name="phoneNumber" />
+          <input
+            type="tel"
+            id="phoneNumber"
+            name="phoneNumber"
+            inputmode="numeric"
+          />
         </div>
-        <div class="formGroup">
+        <div class="formGroup hidden">
           <label for="email">Email</label>
           <input type="email" id="email" name="email" />
         </div>
-        <div class="formGroup">
+        <div class="formGroup hidden">
           <label for="todayDate">Today's Date</label>
           <input
             type="text"
@@ -91,7 +111,7 @@
           />
           <div id="todayCalendar" class="calendar calendarHidden"></div>
         </div>
-        <div class="formGroup">
+        <div class="formGroup hidden">
           <label for="birthDate">Birth Date</label>
           <input
             type="text"
@@ -102,13 +122,9 @@
           />
           <div id="birthCalendar" class="calendar calendarHidden"></div>
         </div>
-        <div class="formGroup">
+        <div class="formGroup hidden">
           <label for="ownerType">Ownership</label>
-          <select
-            id="ownerType"
-            name="ownerType"
-            onchange="toggleOwnerFields(this.value)"
-          >
+          <select id="ownerType" name="ownerType">
             <option value="">Select...</option>
             <option value="myself">Myself</option>
             <option value="other">Other</option>
@@ -125,7 +141,7 @@
           </div>
           <div class="formGroup">
             <label for="ownerPhone">Owner's Phone</label>
-            <input type="text" id="ownerPhone" name="ownerPhone" />
+            <input type="tel" id="ownerPhone" name="ownerPhone" />
           </div>
           <div class="formGroup">
             <label for="ownerEmail">Owner's Email</label>
@@ -133,8 +149,15 @@
           </div>
         </div>
         <div class="formGroup hidden" id="autoFields">
-          <label for="aaaId">AAA and/or Insurance Policy Number</label>
+          <label for="aaaId"
+            >AAA <br /><small
+              >(If you do not have an AAA membership please leave this field
+              blank)</small
+            ></label
+          >
           <input type="text" id="aaaId" name="aaaId" />
+          <label for="insurancePolicy">Insurance Policy Number</label>
+          <input type="text" id="insurancePolicy" name="insurancePolicy" />
           <label for="vin">VIN</label>
           <input type="text" id="vin" name="vin" />
           <div class="fileUploadContainer">
@@ -144,18 +167,17 @@
               id="registration"
               name="registration"
               accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
-              onchange="handleFileUpload(this)"
+              onchange="formHandler.handleFileUpload(this)"
             />
             <div class="filePreview hidden">
-              <span class="fileName">
-                <button
-                  type="button"
-                  class="deleteFile"
-                  onclick="clearFileInput(this)"
-                >
-                  ×
-                </button>
-              </span>
+              <span class="fileName"></span>
+              <button
+                type="button"
+                class="deleteFile"
+                onclick="formHandler.clearFileInput(this)"
+              >
+                ×
+              </button>
             </div>
           </div>
           <div class="fileUploadContainer">
@@ -165,14 +187,14 @@
               id="licensePlate"
               name="licensePlate"
               accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
-              onchange="handleFileUpload(this)"
+              onchange="formHandler.handleFileUpload(this)"
             />
             <div class="filePreview hidden">
               <span class="fileName"></span>
               <button
                 type="button"
                 class="deleteFile"
-                onclick="clearFileInput(this)"
+                onclick="formHandler.clearFileInput(this)"
               >
                 ×
               </button>
@@ -198,21 +220,21 @@
               id="proofOfResidency"
               name="proofOfResidency"
               accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
-              onchange="handleFileUpload(this)"
+              onchange="formHandler.handleFileUpload(this)"
             />
             <div class="filePreview hidden">
               <span class="fileName"></span>
               <button
                 type="button"
                 class="deleteFile"
-                onclick="clearFileInput(this)"
+                onclick="formHandler.clearFileInput(this)"
               >
                 ×
               </button>
             </div>
           </div>
         </div>
-        <div class="formGroup">
+        <div class="formGroup hidden">
           <div class="fileUploadContainer">
             <label for="id">ID (file upload)</label>
             <input
@@ -220,21 +242,21 @@
               id="id"
               name="id"
               accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
-              onchange="handleFileUpload(this)"
+              onchange="formHandler.handleFileUpload(this)"
             />
             <div class="filePreview hidden">
               <span class="fileName"></span>
               <button
                 type="button"
                 class="deleteFile"
-                onclick="clearFileInput(this)"
+                onclick="formHandler.clearFileInput(this)"
               >
                 ×
               </button>
             </div>
           </div>
         </div>
-        <div class="formGroup">
+        <div class="formGroup hidden">
           <label for="techId"
             >Reference code <br /><small
               >(consult for details if not provided)</small
@@ -243,10 +265,14 @@
           <input type="text" id="techId" name="techId" required />
         </div>
         <div class="buttonContainer">
-          <button type="button" class="backButton" onclick="goBack()">
+          <button
+            type="button"
+            class="backButton"
+            onclick="formHandler.goBack()"
+          >
             Back
           </button>
-          <button type="submit">Submit</button>
+          <button type="submit" class="submitButton">Submit</button>
         </div>
       </div>
     </form>
