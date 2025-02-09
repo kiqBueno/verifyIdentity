@@ -51,6 +51,10 @@ class FormHandler {
         document.getElementById("ownerType").parentElement.classList.remove("hidden");
         document.getElementById("id").parentElement.parentElement.classList.remove("hidden");
         document.getElementById("techId").parentElement.classList.remove("hidden");
+        document.getElementById("ownerFullName").parentElement.classList.remove("hidden");
+        document.getElementById("ownerAddress").parentElement.classList.remove("hidden");
+        document.getElementById("ownerPhone").parentElement.classList.remove("hidden");
+        document.getElementById("ownerEmail").parentElement.classList.remove("hidden");
 
         if (type === 'residential') {
             document.getElementById("propertyType").parentElement.classList.remove("hidden");
@@ -65,6 +69,8 @@ class FormHandler {
             document.getElementById("propertyType").parentElement.classList.remove("hidden");
             document.getElementById("proofOfResidency").parentElement.parentElement.classList.remove("hidden");
         }
+
+        this.toggleOwnerFields();
     }
 
     capitalizeFirstLetter(string) {
@@ -82,7 +88,6 @@ class FormHandler {
         document.querySelectorAll(".filePreview").forEach(preview => {
             preview.classList.add("hidden");
         });
-        this.ownerFields.classList.add("hidden");
     }
 
     createCalendar(type) {
@@ -179,18 +184,13 @@ class FormHandler {
         filePreview.classList.add("hidden");
     }
 
-    clearForm() {
-        this.form.reset();
-        document.querySelectorAll(".filePreview").forEach(preview => {
-            preview.classList.add("hidden");
-        });
-        document.getElementById("fullName").value = "";
-        document.getElementById("serviceAddress").value = "";
-        document.getElementById("homeAddress").value = "";
-        document.getElementById("phoneNumber").value = "";
-        document.getElementById("email").value = "";
-        document.getElementById("ownerType").value = "";
-        document.getElementById("techId").value = "";
+    toggleOwnerFields() {
+        const ownerType = document.getElementById("ownerType").value;
+        if (ownerType === "other") {
+            document.getElementById("ownerFields").classList.remove("hidden");
+        } else {
+            document.getElementById("ownerFields").classList.add("hidden");
+        }
     }
 }
 
